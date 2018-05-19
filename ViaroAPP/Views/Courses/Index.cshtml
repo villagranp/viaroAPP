@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ViaroAPP.Models.Course>
+
+@{
+    ViewBag.Title = "Listado de Grados";
+}
+
+<h2>Listado de Grados/Cursos</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Nombre de Curso / Grado
+        </th>
+        <th>
+           Profesor
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.teacher.first_name)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id_course }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.id_course }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id_course })
+        </td>
+    </tr>
+}
+
+</table>

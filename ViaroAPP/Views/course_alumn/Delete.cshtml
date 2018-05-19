@@ -1,0 +1,48 @@
+﻿@model ViaroAPP.Models.course_alumn
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro de eliminar esta asignacion?</h3>
+<div>
+    <h4>Asignaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Seccion:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.section)
+        </dd>
+
+        <dt>
+            Alumno:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.alumn.first_name)
+        </dd>
+
+        <dt>
+            Curso / Grado:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

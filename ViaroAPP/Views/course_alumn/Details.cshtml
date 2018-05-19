@@ -1,0 +1,42 @@
+﻿@model ViaroAPP.Models.course_alumn
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Asignaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Seccion:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.section)
+        </dd>
+
+        <dt>
+            Alumno:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.alumn.first_name)
+        </dd>
+
+        <dt>
+            Curso / Grado:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_course_alumn }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

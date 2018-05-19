@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ViaroAPP.Models.teacher>
+
+@{
+    ViewBag.Title = "Listado de Profesores";
+}
+
+<h2>Listado de Profesores</h2>
+
+<p>
+    @Html.ActionLink("Registrar Nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Nombres
+        </th>
+        <th>
+            Apellidos
+        </th>
+        <th>
+            Genero
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.first_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.last_name)
+        </td>
+        <td>
+            @{
+            if (item.gender == "M")
+            {
+                <span>Masculino</span> 
+            }
+            else
+            {
+                <span>Femenino</span> 
+            }
+
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id_teacher }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.id_teacher }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id_teacher })
+        </td>
+    </tr>
+}
+
+</table>

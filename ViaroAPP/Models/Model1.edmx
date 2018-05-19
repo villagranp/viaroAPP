@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ViaroAPPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="alumn">
+          <Key>
+            <PropertyRef Name="id_alumn" />
+          </Key>
+          <Property Name="id_alumn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nchar" MaxLength="100" />
+          <Property Name="last_name" Type="nchar" MaxLength="100" />
+          <Property Name="gender" Type="nchar" MaxLength="1" />
+          <Property Name="bith_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="id_course" />
+          </Key>
+          <Property Name="id_course" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="10" />
+          <Property Name="id_teacher" Type="int" />
+        </EntityType>
+        <EntityType Name="course_alumn">
+          <Key>
+            <PropertyRef Name="id_course_alumn" />
+          </Key>
+          <Property Name="id_course_alumn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_alumn" Type="int" />
+          <Property Name="id_course" Type="int" />
+          <Property Name="section" Type="nchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="teacher">
+          <Key>
+            <PropertyRef Name="id_teacher" />
+          </Key>
+          <Property Name="id_teacher" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nchar" MaxLength="100" />
+          <Property Name="last_name" Type="nchar" MaxLength="100" />
+          <Property Name="gender" Type="nchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_course_alumn_alumn">
+          <End Role="alumn" Type="Self.alumn" Multiplicity="0..1" />
+          <End Role="course_alumn" Type="Self.course_alumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumn">
+              <PropertyRef Name="id_alumn" />
+            </Principal>
+            <Dependent Role="course_alumn">
+              <PropertyRef Name="id_alumn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_course_alumn_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="course_alumn" Type="Self.course_alumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="id_course" />
+            </Principal>
+            <Dependent Role="course_alumn">
+              <PropertyRef Name="id_course" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_teacher">
+          <End Role="teacher" Type="Self.teacher" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teacher">
+              <PropertyRef Name="id_teacher" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="id_teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ViaroAPPModelStoreContainer">
+          <EntitySet Name="alumn" EntityType="Self.alumn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="course_alumn" EntityType="Self.course_alumn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="teacher" EntityType="Self.teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_course_alumn_alumn" Association="Self.FK_course_alumn_alumn">
+            <End Role="alumn" EntitySet="alumn" />
+            <End Role="course_alumn" EntitySet="course_alumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_course_alumn_Course" Association="Self.FK_course_alumn_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="course_alumn" EntitySet="course_alumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_teacher" Association="Self.FK_Course_teacher">
+            <End Role="teacher" EntitySet="teacher" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ViaroAPPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="alumn">
+          <Key>
+            <PropertyRef Name="id_alumn" />
+          </Key>
+          <Property Name="id_alumn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="bith_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="course_alumn" Relationship="Self.FK_course_alumn_alumn" FromRole="alumn" ToRole="course_alumn" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="id_course" />
+          </Key>
+          <Property Name="id_course" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="id_teacher" Type="Int32" />
+          <NavigationProperty Name="course_alumn" Relationship="Self.FK_course_alumn_Course" FromRole="Course" ToRole="course_alumn" />
+          <NavigationProperty Name="teacher" Relationship="Self.FK_Course_teacher" FromRole="Course" ToRole="teacher" />
+        </EntityType>
+        <EntityType Name="course_alumn">
+          <Key>
+            <PropertyRef Name="id_course_alumn" />
+          </Key>
+          <Property Name="id_course_alumn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_alumn" Type="Int32" />
+          <Property Name="id_course" Type="Int32" />
+          <Property Name="section" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="alumn" Relationship="Self.FK_course_alumn_alumn" FromRole="course_alumn" ToRole="alumn" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_course_alumn_Course" FromRole="course_alumn" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="teacher">
+          <Key>
+            <PropertyRef Name="id_teacher" />
+          </Key>
+          <Property Name="id_teacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Course_teacher" FromRole="teacher" ToRole="Course" />
+        </EntityType>
+        <Association Name="FK_course_alumn_alumn">
+          <End Role="alumn" Type="Self.alumn" Multiplicity="0..1" />
+          <End Role="course_alumn" Type="Self.course_alumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumn">
+              <PropertyRef Name="id_alumn" />
+            </Principal>
+            <Dependent Role="course_alumn">
+              <PropertyRef Name="id_alumn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_course_alumn_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="course_alumn" Type="Self.course_alumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="id_course" />
+            </Principal>
+            <Dependent Role="course_alumn">
+              <PropertyRef Name="id_course" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_teacher">
+          <End Role="teacher" Type="Self.teacher" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teacher">
+              <PropertyRef Name="id_teacher" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="id_teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ViaroAPPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="alumns" EntityType="Self.alumn" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="course_alumn" EntityType="Self.course_alumn" />
+          <EntitySet Name="teachers" EntityType="Self.teacher" />
+          <AssociationSet Name="FK_course_alumn_alumn" Association="Self.FK_course_alumn_alumn">
+            <End Role="alumn" EntitySet="alumns" />
+            <End Role="course_alumn" EntitySet="course_alumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_course_alumn_Course" Association="Self.FK_course_alumn_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="course_alumn" EntitySet="course_alumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_teacher" Association="Self.FK_Course_teacher">
+            <End Role="teacher" EntitySet="teachers" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ViaroAPPModelStoreContainer" CdmEntityContainer="ViaroAPPEntities">
+          <EntitySetMapping Name="alumns">
+            <EntityTypeMapping TypeName="ViaroAPPModel.alumn">
+              <MappingFragment StoreEntitySet="alumn">
+                <ScalarProperty Name="id_alumn" ColumnName="id_alumn" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="bith_date" ColumnName="bith_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="ViaroAPPModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="id_course" ColumnName="id_course" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_teacher" ColumnName="id_teacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="course_alumn">
+            <EntityTypeMapping TypeName="ViaroAPPModel.course_alumn">
+              <MappingFragment StoreEntitySet="course_alumn">
+                <ScalarProperty Name="id_course_alumn" ColumnName="id_course_alumn" />
+                <ScalarProperty Name="id_alumn" ColumnName="id_alumn" />
+                <ScalarProperty Name="id_course" ColumnName="id_course" />
+                <ScalarProperty Name="section" ColumnName="section" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teachers">
+            <EntityTypeMapping TypeName="ViaroAPPModel.teacher">
+              <MappingFragment StoreEntitySet="teacher">
+                <ScalarProperty Name="id_teacher" ColumnName="id_teacher" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ViaroAPP.Models.course_alumn>
+
+@{
+    ViewBag.Title = "Asignacion";
+}
+
+<h2>Asignar Curso</h2>
+
+<p>
+    @Html.ActionLink("Asignar Alumno", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Seccion:
+        </th>
+        <th>
+            Alumno:
+        </th>
+        <th>
+            Curso / Grado:
+        </th>
+        <th>
+            Profesor:
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.section)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.alumn.first_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.name)
+        </td>
+        <td>
+            @ViaroAPP.Controllers.course_alumnController.getTeacher(Int32.Parse(item.id_course.ToString()))
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.id_course_alumn }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.id_course_alumn }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_course_alumn })
+        </td>
+    </tr>
+}
+
+</table>
